@@ -18,18 +18,20 @@ const AIChat: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+      // La API KEY se obtiene automáticamente del entorno de Vercel/Vite
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: userMsg,
         config: {
-          systemInstruction: "Eres 'BraveBot', el asistente experto de Brave Gym. Tu tono es motivador y profesional. Brave Gym abre de 5am a 11pm."
+          systemInstruction: "Eres 'BraveBot', el asistente virtual motivador de Brave Gym. Tu misión es inspirar a los usuarios a entrenar duro. Conoces todos los horarios (5am-11pm) y servicios de Brave Gym. Responde de forma enérgica y profesional en español."
         }
       });
       
-      setMessages(prev => [...prev, { role: 'bot', text: response.text || "Lo siento, tengo un problema técnico." }]);
+      setMessages(prev => [...prev, { role: 'bot', text: response.text || "¡No te detengas! Pero ahora mismo tengo un pequeño fallo técnico. ¡Sigue entrenando!" }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'bot', text: "No pude conectarme con la central motivacional." }]);
+      console.error("Error de IA:", error);
+      setMessages(prev => [...prev, { role: 'bot', text: "Para hablar conmigo, asegúrate de que la API_KEY esté configurada correctamente en el panel de control." }]);
     } finally {
       setIsLoading(false);
     }
@@ -38,7 +40,7 @@ const AIChat: React.FC = () => {
   return (
     <div className="fixed bottom-6 right-6 z-[200]">
       {isOpen ? (
-        <div className="w-80 md:w-96 h-[500px] glass-card rounded-3xl flex flex-col shadow-2xl border border-[#ff4d00]/20">
+        <div className="w-80 md:w-96 h-[500px] glass-card rounded-3xl flex flex-col shadow-2xl border border-[#ff4d00]/20 animate-in zoom-in duration-300">
           <div className="p-4 border-b border-white/10 flex justify-between items-center bg-black/40 rounded-t-3xl">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-[#ff4d00] rounded-full flex items-center justify-center">
@@ -46,29 +48,49 @@ const AIChat: React.FC = () => {
               </div>
               <span className="font-bold text-sm">BraveBot</span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white"><X size={20} /></button>
+            <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors"><X size={20} /></button>
           </div>
           <div className="flex-1 overflow-y-auto p-4 space-y-4 text-sm">
+            {messages.length === 0 && (
+              <div className="text-center text-gray-500 mt-10 px-4">
+                <Bot className="mx-auto mb-4 opacity-20" size={48} />
+                <p>¡Hola! Soy BraveBot. ¿En qué puedo ayudarte hoy para alcanzar tu máximo potencial?</p>
+              </div>
+            )}
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] p-3 rounded-2xl ${m.role === 'user' ? 'bg-[#ff4d00] text-white' : 'bg-white/5 text-gray-300'}`}>
+                <div className={`max-w-[85%] p-3 rounded-2xl ${m.role === 'user' ? 'bg-[#ff4d00] text-white rounded-tr-none' : 'bg-white/5 text-gray-300 rounded-tl-none'}`}>
                   {m.text}
                 </div>
               </div>
             ))}
-            {isLoading && <div className="text-[#ff4d00] animate-pulse">Pensando...</div>}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-white/5 p-3 rounded-2xl rounded-tl-none text-[#ff4d00]">
+                  <div className="flex gap-1">
+                    <span className="animate-bounce">.</span>
+                    <span className="animate-bounce [animation-delay:0.2s]">.</span>
+                    <span className="animate-bounce [animation-delay:0.4s]">.</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="p-4">
+          <div className="p-4 bg-black/20">
             <div className="relative">
               <input 
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyPress={e => e.key === 'Enter' && handleSend()}
                 type="text" 
-                placeholder="Pregunta lo que quieras..."
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:outline-none focus:border-[#ff4d00]"
+                placeholder="Escribe tu mensaje..."
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 pr-12 focus:outline-none focus:border-[#ff4d00] transition-all text-white placeholder-gray-600"
               />
-              <button onClick={handleSend} className="absolute right-2 top-2 p-1.5 bg-[#ff4d00] rounded-lg text-white">
+              <button 
+                onClick={handleSend} 
+                disabled={isLoading}
+                className="absolute right-2 top-2 p-1.5 bg-[#ff4d00] rounded-lg text-white hover:bg-[#e64500] disabled:opacity-50 transition-all"
+              >
                 <Send size={16} />
               </button>
             </div>
@@ -77,9 +99,14 @@ const AIChat: React.FC = () => {
       ) : (
         <button 
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 bg-[#ff4d00] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all text-white"
+          className="w-14 h-14 bg-[#ff4d00] rounded-full flex items-center justify-center shadow-lg shadow-[#ff4d00]/20 hover:scale-110 active:scale-95 transition-all text-white relative group"
         >
           <MessageSquare size={24} />
+          <span className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full animate-ping"></span>
+          <span className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full"></span>
+          <div className="absolute right-full mr-4 bg-white text-black text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            ¿Tienes dudas? ¡Pregúntame!
+          </div>
         </button>
       )}
     </div>
