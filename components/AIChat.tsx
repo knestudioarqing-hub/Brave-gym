@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { MessageSquare, Send, X, Bot } from 'lucide-react';
+import { MessageSquare, Send, X, Bot, AlertCircle } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 const AIChat: React.FC = () => {
@@ -17,9 +17,21 @@ const AIChat: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
+    const apiKey = process.env.API_KEY || (window as any).process?.env?.API_KEY;
+
+    if (!apiKey) {
+      setTimeout(() => {
+        setMessages(prev => [...prev, { 
+          role: 'bot', 
+          text: "¡Hola! Para que pueda responderte, necesitas configurar la API_KEY en el panel de Vercel. Es un paso necesario para activar mi cerebro de IA en este nuevo proyecto." 
+        }]);
+        setIsLoading(false);
+      }, 1000);
+      return;
+    }
+
     try {
-      // La API KEY se obtiene automáticamente del entorno de Vercel/Vite
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: userMsg,
@@ -28,10 +40,10 @@ const AIChat: React.FC = () => {
         }
       });
       
-      setMessages(prev => [...prev, { role: 'bot', text: response.text || "¡No te detengas! Pero ahora mismo tengo un pequeño fallo técnico. ¡Sigue entrenando!" }]);
+      setMessages(prev => [...prev, { role: 'bot', text: response.text || "¡No te detengas! Sigue entrenando duro." }]);
     } catch (error) {
       console.error("Error de IA:", error);
-      setMessages(prev => [...prev, { role: 'bot', text: "Para hablar conmigo, asegúrate de que la API_KEY esté configurada correctamente en el panel de control." }]);
+      setMessages(prev => [...prev, { role: 'bot', text: "He tenido un problema de conexión. ¡Pero que eso no detenga tu entrenamiento!" }]);
     } finally {
       setIsLoading(false);
     }
@@ -54,12 +66,12 @@ const AIChat: React.FC = () => {
             {messages.length === 0 && (
               <div className="text-center text-gray-500 mt-10 px-4">
                 <Bot className="mx-auto mb-4 opacity-20" size={48} />
-                <p>¡Hola! Soy BraveBot. ¿En qué puedo ayudarte hoy para alcanzar tu máximo potencial?</p>
+                <p>¡Hola! Soy BraveBot. ¿Listo para romper tus límites hoy?</p>
               </div>
             )}
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] p-3 rounded-2xl ${m.role === 'user' ? 'bg-[#ff4d00] text-white rounded-tr-none' : 'bg-white/5 text-gray-300 rounded-tl-none'}`}>
+                <div className={`max-w-[85%] p-3 rounded-2xl ${m.role === 'user' ? 'bg-[#ff4d00] text-white rounded-tr-none' : 'bg-white/5 text-gray-300 rounded-tl-none border border-white/5'}`}>
                   {m.text}
                 </div>
               </div>
@@ -89,7 +101,7 @@ const AIChat: React.FC = () => {
               <button 
                 onClick={handleSend} 
                 disabled={isLoading}
-                className="absolute right-2 top-2 p-1.5 bg-[#ff4d00] rounded-lg text-white hover:bg-[#e64500] disabled:opacity-50 transition-all"
+                className="absolute right-2 top-2 p-1.5 bg-[#ff4d00] rounded-lg text-white hover:bg-[#e64500] disabled:opacity-50 transition-all shadow-lg shadow-[#ff4d00]/20"
               >
                 <Send size={16} />
               </button>
@@ -99,14 +111,11 @@ const AIChat: React.FC = () => {
       ) : (
         <button 
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 bg-[#ff4d00] rounded-full flex items-center justify-center shadow-lg shadow-[#ff4d00]/20 hover:scale-110 active:scale-95 transition-all text-white relative group"
+          className="w-14 h-14 bg-[#ff4d00] rounded-full flex items-center justify-center shadow-lg shadow-[#ff4d00]/40 hover:scale-110 active:scale-95 transition-all text-white relative group"
         >
           <MessageSquare size={24} />
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full animate-ping"></span>
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full"></span>
-          <div className="absolute right-full mr-4 bg-white text-black text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            ¿Tienes dudas? ¡Pregúntame!
-          </div>
         </button>
       )}
     </div>

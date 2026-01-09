@@ -7,7 +7,6 @@ import Stats from './components/Stats.tsx';
 import Testimonials from './components/Testimonials.tsx';
 import LocationMap from './components/LocationMap.tsx';
 import Footer from './components/Footer.tsx';
-import AIChat from './components/AIChat.tsx';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -47,7 +46,6 @@ const App: React.FC = () => {
       </main>
 
       <Footer />
-      <AIChat />
     </div>
   );
 };
