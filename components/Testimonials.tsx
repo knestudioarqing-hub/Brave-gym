@@ -25,39 +25,39 @@ const Testimonials: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 px-4 md:px-8 border-t border-white/5">
+    <section className="py-16 md:py-24 px-4 md:px-8 border-t border-white/5">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-8">
           <div>
-            <h2 className="text-5xl md:text-6xl font-black font-heading mb-4">Amado por nuestra <br /><span className="text-[#ff4d00]">comunidad.</span></h2>
-            <p className="text-gray-400 max-w-md">Únete a más de 20,000 clientes felices que han mejorado su viaje fitness con nosotros.</p>
+            <h2 className="text-4xl md:text-6xl font-black font-heading mb-4 leading-none">Amado por nuestra <br /><span className="text-[#ff4d00]">comunidad.</span></h2>
+            <p className="text-gray-400 max-w-md text-sm md:text-base">Únete a más de 20,000 clientes felices que han mejorado su viaje fitness con nosotros.</p>
           </div>
-          <div className="bg-[#ff4d00] p-6 rounded-3xl flex items-center space-x-4">
+          <div className="bg-[#ff4d00] p-5 md:p-6 rounded-3xl flex items-center space-x-4 w-full md:w-auto">
              <div className="flex -space-x-4">
                 {[1,2,3,4].map(i => (
-                  <img key={i} src={`https://picsum.photos/50/50?random=${i+10}`} className="w-12 h-12 rounded-full border-4 border-[#ff4d00]" alt="usuario" />
+                  <img key={i} src={`https://picsum.photos/50/50?random=${i+10}`} className="w-10 h-10 md:w-12 md:h-12 rounded-full border-4 border-[#ff4d00]" alt="usuario" />
                 ))}
              </div>
              <div className="text-white">
                 <div className="flex text-yellow-300 mb-1">
                   {[1,2,3,4,5].map(i => <Star key={i} size={16} fill="currentColor" />)}
                 </div>
-                <p className="text-sm font-bold">Calificación promedio 4.9/5</p>
+                <p className="text-xs md:text-sm font-bold">Calificación promedio 4.9/5</p>
              </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {reviews.map((review, idx) => (
-            <div key={idx} className="bg-zinc-900/40 border border-white/5 p-8 rounded-[40px] hover:border-[#ff4d00]/30 transition-all">
-              <div className="flex items-center space-x-4 mb-6">
-                <img src={review.image} className="w-14 h-14 rounded-2xl object-cover" alt={review.name} />
+            <div key={idx} className="bg-zinc-900/40 border border-white/5 p-6 md:p-8 rounded-[30px] md:rounded-[40px] hover:border-[#ff4d00]/30 transition-all">
+              <div className="flex items-center space-x-4 mb-4 md:mb-6">
+                <img src={review.image} className="w-12 h-12 md:w-14 md:h-14 rounded-2xl object-cover" alt={review.name} />
                 <div>
-                  <h4 className="font-bold text-white">{review.name}</h4>
-                  <p className="text-xs text-[#ff4d00] font-bold uppercase tracking-wider">{review.role}</p>
+                  <h4 className="font-bold text-white text-base md:text-lg">{review.name}</h4>
+                  <p className="text-[10px] md:text-xs text-[#ff4d00] font-bold uppercase tracking-wider">{review.role}</p>
                 </div>
               </div>
-              <p className="text-gray-400 italic leading-relaxed">"{review.content}"</p>
+              <p className="text-gray-400 italic leading-relaxed text-sm md:text-base">"{review.content}"</p>
             </div>
           ))}
         </div>
