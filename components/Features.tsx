@@ -20,7 +20,7 @@ const Features: React.FC = () => {
       title: 'Seguimiento de Rendimiento',
       description: 'Métricas impulsadas por IA para monitorear tu progreso y alcanzar tus objetivos.',
       icon: <Zap className="text-[#ff4d00]" size={32} />,
-      image: 'https://images.unsplash.com/photo-1548690312-e3b507d17a4d?q=80&w=1974&auto=format&fit=crop'
+      image: 'https://images.unsplash.com/photo-1550345332-09e3ac987658?q=80&w=1974&auto=format&fit=crop'
     }
   ];
 

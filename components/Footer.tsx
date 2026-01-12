@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 mb-20">
           
           <div className="lg:col-span-1 space-y-8">
-            <Logo size="lg" className="!items-start" />
+            <Logo className="!items-start" />
             <p className="text-gray-500 max-w-xs pt-4">
               Construyendo campeones y forjando futuros más fuertes a través de una disciplina implacable y entrenamiento de élite.
             </p>

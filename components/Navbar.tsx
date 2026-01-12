@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
     <header className="fixed top-0 left-0 right-0 z-[100] transition-all duration-500">
       {/* Integrated Offer Banner */}
       <div className={`bg-[#ff4d00] text-black py-2 px-4 text-center text-[10px] md:text-xs font-black uppercase tracking-widest transition-all duration-500 overflow-hidden ${isScrolled ? 'h-0 py-0 opacity-0' : 'h-auto opacity-100'}`}>
-        ¡Oferta por tiempo limitado! Obtén un 20% de descuento en todos los esenciales.
+        ¡OFERTA POR TIEMPO LIMITADO! OBTÉN UN 20% DE DESCUENTO EN TU PRIMER MES DE ENTRENAMIENTO.
       </div>
 
       <nav className={`transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-xl py-3 border-b border-white/10' : 'bg-transparent py-6'}`}>
