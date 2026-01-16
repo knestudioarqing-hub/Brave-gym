@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react';
-import { MessageSquare, Send, X, Bot, AlertCircle } from 'lucide-react';
+import { MessageSquare, Send, X, Bot } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
+import { useLanguage } from '../context/LanguageContext';
 
 const AIChat: React.FC = () => {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{role: 'user' | 'bot', text: string}[]>([]);
   const [input, setInput] = useState('');
@@ -23,7 +25,7 @@ const AIChat: React.FC = () => {
       setTimeout(() => {
         setMessages(prev => [...prev, { 
           role: 'bot', 
-          text: "¡Hola! Para que pueda responderte, necesitas configurar la API_KEY en el panel de Vercel. Es un paso necesario para activar mi cerebro de IA en este nuevo proyecto." 
+          text: t.aiChat.errorKey
         }]);
         setIsLoading(false);
       }, 1000);
@@ -36,14 +38,14 @@ const AIChat: React.FC = () => {
         model: 'gemini-3-flash-preview',
         contents: userMsg,
         config: {
-          systemInstruction: "Eres 'BraveBot', el asistente virtual motivador de Brave Gym. Tu misión es inspirar a los usuarios a entrenar duro. Conoces todos los horarios (5am-11pm) y servicios de Brave Gym. Responde de forma enérgica y profesional en español."
+          systemInstruction: t.aiChat.systemPrompt
         }
       });
       
       setMessages(prev => [...prev, { role: 'bot', text: response.text || "¡No te detengas! Sigue entrenando duro." }]);
     } catch (error) {
       console.error("Error de IA:", error);
-      setMessages(prev => [...prev, { role: 'bot', text: "He tenido un problema de conexión. ¡Pero que eso no detenga tu entrenamiento!" }]);
+      setMessages(prev => [...prev, { role: 'bot', text: t.aiChat.errorGen }]);
     } finally {
       setIsLoading(false);
     }
@@ -58,7 +60,7 @@ const AIChat: React.FC = () => {
               <div className="w-8 h-8 bg-[#ff4d00] rounded-full flex items-center justify-center">
                 <Bot size={18} className="text-white" />
               </div>
-              <span className="font-bold text-sm">BraveBot</span>
+              <span className="font-bold text-sm">{t.aiChat.botName}</span>
             </div>
             <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors"><X size={20} /></button>
           </div>
@@ -66,7 +68,7 @@ const AIChat: React.FC = () => {
             {messages.length === 0 && (
               <div className="text-center text-gray-500 mt-10 px-4">
                 <Bot className="mx-auto mb-4 opacity-20" size={48} />
-                <p>¡Hola! Soy BraveBot. ¿Listo para romper tus límites hoy?</p>
+                <p>{t.aiChat.initial}</p>
               </div>
             )}
             {messages.map((m, i) => (
@@ -95,7 +97,7 @@ const AIChat: React.FC = () => {
                 onChange={e => setInput(e.target.value)}
                 onKeyPress={e => e.key === 'Enter' && handleSend()}
                 type="text" 
-                placeholder="Escribe tu mensaje..."
+                placeholder={t.aiChat.placeholder}
                 className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 pr-12 focus:outline-none focus:border-[#ff4d00] transition-all text-white placeholder-gray-600"
               />
               <button 

@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { Search, Menu, X, ChevronDown } from 'lucide-react';
+import { Search, Menu, X, ChevronDown, Globe } from 'lucide-react';
 import Logo from './Logo';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar: React.FC = () => {
+  const { language, setLanguage, t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -16,18 +18,22 @@ const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Inicio', href: '#' },
-    { name: 'Páginas', href: '#', hasDropdown: true },
-    { name: 'Blog', href: '#', hasDropdown: true },
-    { name: 'Contáctanos', href: '#ubicacion' },
-    { name: 'Tienda', href: '#', hasDropdown: true },
+    { name: t.navbar.home, href: '#' },
+    { name: t.navbar.pages, href: '#', hasDropdown: true },
+    { name: t.navbar.blog, href: '#', hasDropdown: true },
+    { name: t.navbar.contact, href: '#ubicacion' },
+    { name: t.navbar.shop, href: '#', hasDropdown: true },
   ];
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'es' ? 'pt' : 'es');
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] transition-all duration-500">
       {/* Integrated Offer Banner */}
       <div className={`bg-[#ff4d00] text-black py-2 px-4 text-center text-[10px] md:text-xs font-black uppercase tracking-widest transition-all duration-500 overflow-hidden ${isScrolled ? 'h-0 py-0 opacity-0' : 'h-auto opacity-100'}`}>
-        ¡OFERTA POR TIEMPO LIMITADO! OBTÉN UN 20% DE DESCUENTO EN TU PRIMER MES DE ENTRENAMIENTO.
+        {t.navbar.offer}
       </div>
 
       <nav className={`transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-xl py-3 border-b border-white/10' : 'bg-transparent py-6'}`}>
@@ -39,6 +45,12 @@ const Navbar: React.FC = () => {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+            <button 
+              onClick={toggleLanguage}
+              className="text-white font-bold text-xs border border-white/20 px-2 py-1 rounded hover:bg-[#ff4d00] hover:border-[#ff4d00] transition-colors"
+            >
+              {language.toUpperCase()}
             </button>
           </div>
 
@@ -75,12 +87,22 @@ const Navbar: React.FC = () => {
                 </a>
               ))}
             </div>
+            
             <div className="flex items-center space-x-4">
+              {/* Language Switcher Desktop */}
+              <button 
+                onClick={toggleLanguage}
+                className="hidden md:flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-white transition-colors uppercase"
+              >
+                <Globe size={14} />
+                <span>{language}</span>
+              </button>
+
               <button className="text-white hover:text-[#ff4d00] transition-colors p-2 rounded-full hover:bg-white/5 transition-all">
                 <Search size={20} />
               </button>
               <button className="hidden sm:block bg-[#ff4d00] hover:bg-[#e64500] text-white px-6 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-[#ff4d00]/20">
-                ÚNETE AHORA
+                {t.navbar.join}
               </button>
             </div>
           </div>
@@ -100,7 +122,7 @@ const Navbar: React.FC = () => {
               </a>
             ))}
             <button className="bg-[#ff4d00] text-white py-4 rounded-xl text-lg font-bold shadow-xl">
-              Únete Ahora
+              {t.navbar.mobileJoin}
             </button>
           </div>
         )}

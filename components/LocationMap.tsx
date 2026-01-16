@@ -1,8 +1,10 @@
 
 import React from 'react';
 import { MapPin, Phone, Clock, Navigation, ExternalLink } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const LocationMap: React.FC = () => {
+  const { t } = useLanguage();
   const googleMapsUrl = "https://maps.app.goo.gl/bJnEc1Y6RRquJeqL6";
   
   return (
@@ -14,12 +16,12 @@ const LocationMap: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-8 md:space-y-10 order-2 lg:order-1">
             <div>
-              <span className="text-[#ff4d00] font-bold uppercase tracking-[0.3em] text-xs md:text-sm block mb-4">Visítanos</span>
+              <span className="text-[#ff4d00] font-bold uppercase tracking-[0.3em] text-xs md:text-sm block mb-4">{t.location.subtitle}</span>
               <h2 className="text-4xl md:text-7xl font-black font-heading tracking-tighter leading-none mb-4 md:mb-6">
-                TU NUEVA <br /><span className="text-[#ff4d00]">ZONA DE GUERRA.</span>
+                {t.location.titleStart} <br /><span className="text-[#ff4d00]">{t.location.titleEnd}</span>
               </h2>
               <p className="text-gray-400 text-base md:text-lg max-w-md">
-                Ubicados en el corazón del distrito deportivo, nuestras instalaciones están diseñadas para la victoria.
+                {t.location.desc}
               </p>
             </div>
 
@@ -29,7 +31,7 @@ const LocationMap: React.FC = () => {
                   <MapPin className="text-[#ff4d00]" size={20} />
                 </div>
                 <div>
-                  <h4 className="text-white font-bold mb-1 text-sm md:text-base">Dirección Principal</h4>
+                  <h4 className="text-white font-bold mb-1 text-sm md:text-base">{t.location.addrTitle}</h4>
                   <p className="text-gray-400 text-sm md:text-base">Av. de la Victoria 45, Complejo Brave, 28023</p>
                 </div>
               </div>
@@ -39,7 +41,7 @@ const LocationMap: React.FC = () => {
                   <Phone className="text-[#ff4d00]" size={20} />
                 </div>
                 <div>
-                  <h4 className="text-white font-bold mb-1 text-sm md:text-base">Línea Directa</h4>
+                  <h4 className="text-white font-bold mb-1 text-sm md:text-base">{t.location.phoneTitle}</h4>
                   <p className="text-gray-400 text-sm md:text-base">+34 912 345 678</p>
                 </div>
               </div>
@@ -49,8 +51,8 @@ const LocationMap: React.FC = () => {
                   <Clock className="text-[#ff4d00]" size={20} />
                 </div>
                 <div>
-                  <h4 className="text-white font-bold mb-1 text-sm md:text-base">Horario Ininterrumpido</h4>
-                  <p className="text-gray-400 text-sm md:text-base">Lunes a Domingo: 05:00 - 23:00</p>
+                  <h4 className="text-white font-bold mb-1 text-sm md:text-base">{t.location.hoursTitle}</h4>
+                  <p className="text-gray-400 text-sm md:text-base">{t.location.hoursDesc}</p>
                 </div>
               </div>
             </div>
@@ -62,7 +64,7 @@ const LocationMap: React.FC = () => {
               className="inline-flex items-center justify-center w-full md:w-auto gap-3 bg-[#ff4d00] text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-black uppercase tracking-tighter hover:bg-[#e64500] transition-all transform hover:-translate-y-1 shadow-xl shadow-[#ff4d00]/20 text-sm md:text-base"
             >
               <Navigation size={18} />
-              Abrir en Google Maps
+              {t.location.btnMap}
               <ExternalLink size={14} className="opacity-50" />
             </a>
           </div>
@@ -86,7 +88,7 @@ const LocationMap: React.FC = () => {
               {/* Floating Badge on Map */}
               <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-black/80 backdrop-blur-md px-3 py-1.5 md:px-4 md:py-2 rounded-xl border border-white/10 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-[10px] md:text-xs font-bold text-white uppercase tracking-widest">Abierto Ahora</span>
+                <span className="text-[10px] md:text-xs font-bold text-white uppercase tracking-widest">{t.location.badgeOpen}</span>
               </div>
             </div>
             

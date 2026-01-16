@@ -9,8 +9,9 @@ import Testimonials from './components/Testimonials.tsx';
 import LocationMap from './components/LocationMap.tsx';
 import Footer from './components/Footer.tsx';
 import AIChat from './components/AIChat.tsx';
+import { LanguageProvider } from './context/LanguageContext.tsx';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   useEffect(() => {
     // Smooth scroll behavior for internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -46,6 +47,14 @@ const App: React.FC = () => {
       <AIChat />
       <Footer />
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 };
 

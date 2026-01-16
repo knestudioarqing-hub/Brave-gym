@@ -1,11 +1,14 @@
 
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Stats: React.FC = () => {
+  const { t } = useLanguage();
+
   const stats = [
-    { label: 'Productos Vendidos', value: '1,250+' },
-    { label: 'Clientes Felices', value: '20K' },
-    { label: 'Garantía de Calidad', value: '100%' },
+    { label: t.stats.sold, value: '1,250+' },
+    { label: t.stats.clients, value: '20K' },
+    { label: t.stats.quality, value: '100%' },
   ];
 
   return (

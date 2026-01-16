@@ -1,32 +1,34 @@
 
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
-
-const images = [
-  {
-    url: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070&auto=format&fit=crop',
-    title: 'Zona de Pesas Libres',
-    desc: 'Equipamiento de grado competitivo para fuerza máxima.'
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1581009146145-b5ef03a94e77?q=80&w=2070&auto=format&fit=crop',
-    title: 'Área de Cardio High-End',
-    desc: 'Máquinas de última generación con monitoreo de rendimiento.'
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1593079831268-3381b0db4a77?q=80&w=2069&auto=format&fit=crop',
-    title: 'Espacio de Powerlifting',
-    desc: 'Plataformas profesionales para tus levantamientos más pesados.'
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1518611012118-2969c636020d?q=80&w=2070&auto=format&fit=crop',
-    title: 'Estudio de Clases Grupales',
-    desc: 'Ambiente inmersivo con sonido premium e iluminación dinámica.'
-  }
-];
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Gallery: React.FC = () => {
+  const { t } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const images = [
+    {
+      url: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070&auto=format&fit=crop',
+      title: t.gallery.img1Title,
+      desc: t.gallery.img1Desc
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1581009146145-b5ef03a94e77?q=80&w=2070&auto=format&fit=crop',
+      title: t.gallery.img2Title,
+      desc: t.gallery.img2Desc
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1593079831268-3381b0db4a77?q=80&w=2069&auto=format&fit=crop',
+      title: t.gallery.img3Title,
+      desc: t.gallery.img3Desc
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1518611012118-2969c636020d?q=80&w=2070&auto=format&fit=crop',
+      title: t.gallery.img4Title,
+      desc: t.gallery.img4Desc
+    }
+  ];
 
   const nextSlide = () => {
     setActiveIndex((prev) => (prev + 1) % images.length);
@@ -46,9 +48,9 @@ const Gallery: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-6 relative z-10">
           <div>
-            <span className="text-[#ff4d00] font-bold uppercase tracking-[0.3em] text-xs md:text-sm block mb-4">Instalaciones Premium</span>
+            <span className="text-[#ff4d00] font-bold uppercase tracking-[0.3em] text-xs md:text-sm block mb-4">{t.gallery.subtitle}</span>
             <h2 className="text-4xl md:text-7xl font-black font-heading tracking-tight leading-none">
-              NUESTRO <br /><span className="text-gray-600">ESPACIO.</span>
+              {t.gallery.titleStart} <br /><span className="text-gray-600">{t.gallery.titleEnd}</span>
             </h2>
           </div>
           

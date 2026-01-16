@@ -1,24 +1,27 @@
 
 import React from 'react';
 import { Dumbbell, Users, Zap } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Features: React.FC = () => {
+  const { t } = useLanguage();
+
   const features = [
     {
-      title: 'Entrenamiento de Fuerza',
-      description: 'Equipamiento avanzado y rutinas personalizadas para aumentar la masa muscular.',
+      title: t.features.f1Title,
+      description: t.features.f1Desc,
       icon: <Dumbbell className="text-[#ff4d00]" size={32} />,
       image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop'
     },
     {
-      title: 'Clases Grupales',
-      description: 'Sesiones energéticas que van desde HIIT hasta Yoga con entrenadores expertos.',
+      title: t.features.f2Title,
+      description: t.features.f2Desc,
       icon: <Users className="text-[#ff4d00]" size={32} />,
       image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1975&auto=format&fit=crop'
     },
     {
-      title: 'Seguimiento de Rendimiento',
-      description: 'Métricas impulsadas por IA para monitorear tu progreso y alcanzar tus objetivos.',
+      title: t.features.f3Title,
+      description: t.features.f3Desc,
       icon: <Zap className="text-[#ff4d00]" size={32} />,
       image: 'https://images.unsplash.com/photo-1550345332-09e3ac987658?q=80&w=1974&auto=format&fit=crop'
     }
@@ -28,9 +31,9 @@ const Features: React.FC = () => {
     <section id="features" className="py-16 md:py-24 px-4 md:px-8 bg-[#0a0a0a]">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12 md:mb-16">
-          <span className="text-[#ff4d00] font-bold uppercase tracking-[0.3em] text-xs md:text-sm block mb-4">Nuestros Programas</span>
+          <span className="text-[#ff4d00] font-bold uppercase tracking-[0.3em] text-xs md:text-sm block mb-4">{t.features.subtitle}</span>
           <h2 className="text-4xl md:text-6xl font-black font-heading tracking-tight max-w-2xl leading-[0.95]">
-            Diseñado para aquellos que <span className="text-gray-600">quieren ganar.</span>
+            {t.features.titleStart} <span className="text-gray-600">{t.features.titleEnd}</span>
           </h2>
         </div>
 
@@ -56,7 +59,7 @@ const Features: React.FC = () => {
                 
                 <div className="mt-6 md:mt-8 overflow-hidden h-0 group-hover:h-8 transition-all duration-300">
                   <button className="text-[#ff4d00] font-bold flex items-center group/btn text-sm">
-                    Leer Más 
+                    {t.features.readMore} 
                     <ArrowIcon className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </div>

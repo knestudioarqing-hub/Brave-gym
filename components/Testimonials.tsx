@@ -1,25 +1,28 @@
 
 import React from 'react';
 import { Star } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Testimonials: React.FC = () => {
+  const { t } = useLanguage();
+
   const reviews = [
     {
       name: "Alex Johnson",
-      role: "Atleta",
-      content: "La calidad del equipamiento es inigualable. He visto resultados más rápido que con cualquier otro equipo de gimnasio que haya usado.",
+      role: t.testimonials.r1Role,
+      content: t.testimonials.r1Content,
       image: "https://picsum.photos/100/100?random=1"
     },
     {
       name: "Sarah Miller",
-      role: "Entrenadora de Fitness",
-      content: "Brave Gym ha revolucionado la forma en que entreno a mis clientes. Las herramientas de seguimiento del rendimiento cambian las reglas del juego.",
+      role: t.testimonials.r2Role,
+      content: t.testimonials.r2Content,
       image: "https://picsum.photos/100/100?random=2"
     },
     {
       name: "Marcus Thorne",
-      role: "Fisicoculturista",
-      content: "Los mejores productos en su clase. La estética del equipo coincide con la intensidad de mi entrenamiento.",
+      role: t.testimonials.r3Role,
+      content: t.testimonials.r3Content,
       image: "https://picsum.photos/100/100?random=3"
     }
   ];
@@ -29,8 +32,8 @@ const Testimonials: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-8">
           <div>
-            <h2 className="text-4xl md:text-6xl font-black font-heading mb-4 leading-none">Amado por nuestra <br /><span className="text-[#ff4d00]">comunidad.</span></h2>
-            <p className="text-gray-400 max-w-md text-sm md:text-base">Únete a más de 20,000 clientes felices que han mejorado su viaje fitness con nosotros.</p>
+            <h2 className="text-4xl md:text-6xl font-black font-heading mb-4 leading-none">{t.testimonials.titleStart} <br /><span className="text-[#ff4d00]">{t.testimonials.titleEnd}</span></h2>
+            <p className="text-gray-400 max-w-md text-sm md:text-base">{t.testimonials.subtitle}</p>
           </div>
           <div className="bg-[#ff4d00] p-5 md:p-6 rounded-3xl flex items-center space-x-4 w-full md:w-auto">
              <div className="flex -space-x-4">
@@ -42,7 +45,7 @@ const Testimonials: React.FC = () => {
                 <div className="flex text-yellow-300 mb-1">
                   {[1,2,3,4,5].map(i => <Star key={i} size={16} fill="currentColor" />)}
                 </div>
-                <p className="text-xs md:text-sm font-bold">Calificación promedio 4.9/5</p>
+                <p className="text-xs md:text-sm font-bold">{t.testimonials.rating}</p>
              </div>
           </div>
         </div>
