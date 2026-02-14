@@ -71,22 +71,23 @@ const LocationMap: React.FC = () => {
 
           <div className="relative group order-1 lg:order-2">
             {/* Map Container with Frame Effect */}
-            <div className="h-[300px] md:h-[600px] rounded-[30px] md:rounded-[40px] overflow-hidden border border-white/10 relative shadow-2xl transition-all duration-700 group-hover:border-[#ff4d00]/30">
+            <div className="h-[300px] md:h-[600px] rounded-[30px] md:rounded-[40px] overflow-hidden border border-white/10 relative shadow-2xl transition-all duration-700 group-hover:border-[#ff4d00]/30 bg-zinc-900">
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.6635!2d-3.70379!3d40.416775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sPuerta%20del%20Sol!5e0!3m2!1ses!2ses!4v1709123456789!5m2!1ses!2ses" 
                 width="100%" 
                 height="100%" 
-                style={{ border: 0, filter: 'grayscale(1) contrast(1.2) invert(0.9)' }} 
+                style={{ border: 0, filter: 'grayscale(1) contrast(1.1) brightness(0.8)' }} 
                 allowFullScreen={true} 
                 loading="lazy" 
-                className="transition-all duration-1000 group-hover:grayscale-0 group-hover:invert-0 group-hover:contrast-100"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="transition-all duration-1000 group-hover:grayscale-0 group-hover:brightness-100 group-hover:contrast-100"
               ></iframe>
               
-              {/* Overlay Gradient for integration */}
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+              {/* Overlay Gradient for integration - Pointer events none is key here */}
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
               
               {/* Floating Badge on Map */}
-              <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-black/80 backdrop-blur-md px-3 py-1.5 md:px-4 md:py-2 rounded-xl border border-white/10 flex items-center gap-2">
+              <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-black/80 backdrop-blur-md px-3 py-1.5 md:px-4 md:py-2 rounded-xl border border-white/10 flex items-center gap-2 z-20">
                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="text-[10px] md:text-xs font-bold text-white uppercase tracking-widest">{t.location.badgeOpen}</span>
               </div>
